@@ -15,8 +15,6 @@ const initialState: HabitState = {
 
 export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
     // Await the result from the IPC call and get the data
-
-
     const habits = await window.electronAPI.readJson();  // Await the promise here
     return habits;  // Return the data
   });

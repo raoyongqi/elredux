@@ -22,4 +22,21 @@ ipcMain.handle('read-json', async () => {
   });
 
 });
+
+
+
+ipcMain.handle('save-habits', (event, updatedHabits) => {
+  // 直接指定文件保存路径
+  const filePath = path.join(__dirname, '..', '..', 'common', 'data.txt'); // 设置保存路径
+
+  // 保存文件
+  fs.writeFile(filePath, updatedHabits, 'utf8', (err) => {
+    if (err) {
+      console.error('Failed to save the file:', err);
+    } else {
+      console.log('File saved successfully:', filePath);
+    }
+  });
+});
+
 }
