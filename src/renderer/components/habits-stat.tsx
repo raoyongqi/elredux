@@ -6,6 +6,8 @@ import { LinearProgress, Paper, Typography } from '@mui/material';
 import { AppDispatch, RootState} from '../store/store';
 
 const HabitsStat: React.FC = () => {
+   // 使用 `useSelector` 从 Redux store 中获取 `habits` 状态
+   // `state.habits` 代表从 store 中提取的习惯数据状态
     const { habits, isLoading, error } = useSelector((state: RootState) => state.habits);
     const dispatch = useDispatch<AppDispatch>();
 

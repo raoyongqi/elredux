@@ -21,27 +21,14 @@ const initialState: HabitState = {
 }
 
 export const fetchHabits = createAsyncThunk("habits/fetchHabits", async () => {
-    // Simulating an API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const mockHabits: Habit[] = [
-        {
-            id: "1",
-            name: "Read",
-            frequency: "daily",
-            completedDates: [],
-            createdAt: new Date().toISOString(),
-        },
-        {
-            id: "2",
-            name: "Exercise",
-            frequency: "daily",
-            completedDates: [],
-            createdAt: new Date().toISOString(),
-        },
-    ];
-    return mockHabits;
-})
+    // Await the result from the IPC call and get the data
+    console.log('electronAPI:', window.electronAPI);
+    console.log('readJson function:', window.electronAPI.readJson);
 
+    const habits = await window.electronAPI.readJson();  // Await the promise here
+    return habits;  // Return the data
+  });
+  
 const habitSlice = createSlice({
     name: "habits",
     initialState,
