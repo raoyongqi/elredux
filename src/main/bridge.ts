@@ -7,18 +7,19 @@ import path from 'path';
 export function initBridge() {
 // 通过 IPC 从本地文件读取数据
 ipcMain.handle('read-json', async () => {
-  try {
-    
-    // 使用 path.join 拼接文件路径
-    const filePath = path.join(__dirname, '..', '..', 'common', 'data.json');
 
-    
-    // 读取 JSON 文件
-    const data = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(data);  // 返回 JSON 数据
-  } catch (error) {
-    console.error('Failed to fetch local habits:', error);
-    throw new Error('Failed to fetch local habits');
-  }
+  const filePath = path.join(__dirname, '..', '..', 'common', 'data.txt');
+
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        const lines = data.split('\n').map(line => line.trim()); // 分割每行并去除多余的空白
+        resolve(lines);
+      }
+    });
+  });
+
 });
 }

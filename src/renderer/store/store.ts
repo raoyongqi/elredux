@@ -1,17 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
-import habitsReducer from './habit-slice'
+import { configureStore } from "@reduxjs/toolkit";  // 从 Redux Toolkit 导入 configureStore，用于简化 Redux store 的配置过程
+import habitsReducer from './habit-slice'  // 导入 habitsSlice 的 reducer，它处理关于习惯（habits）状态的更新逻辑
 
-
+// 配置 Redux store
 const store =  configureStore({
     reducer: {
-        habits: habitsReducer
+        habits: habitsReducer  // 将 habitsReducer 作为 reducer 配置到 Redux store 中的 habits 部分
     },
 })
 
-// This line of code extracts the state type
-export type RootState = ReturnType<typeof store.getState>;
+// 这行代码通过返回 store.getState 的返回类型来推断整个 Redux store 的状态类型
+export type RootState = ReturnType<typeof store.getState>;  
 
-export type AppDispatch = typeof store.dispatch; // TypeScript will help us to identify correct type of dispatch that also matches with action.  // This line of code extracts the dispatch type
+// 这行代码提取 dispatch 的类型，确保在 dispatch action 时，TypeScript 可以自动推断正确的类型
+export type AppDispatch = typeof store.dispatch;  // TypeScript 会帮助我们识别正确的 dispatch 类型，并确保它与 action 匹配
 
-
-export default store;
+export default store;  // 导出配置好的 Redux store，以便在应用的其他部分使用
