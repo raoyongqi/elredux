@@ -1,15 +1,23 @@
 import { Box, Button, Grid, LinearProgress, Paper, Typography } from "@mui/material";
 import { AppDispatch, RootState } from "../store/store";
-import React from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { Habit, removeHabit, toggleHabit } from "../store/habit-slice";
+import React, { useEffect } from 'react';
+import { fetchHabits,} from '../store/habit-slice';  // 引入 Redux 中的异步操作 `fetchHabits` 和 `Habit` 类型
+
 
 const HabitsList: React.FC = () => {
   const { habits } = useSelector((state: RootState) => state.habits);
 
   const dispatch = useDispatch<AppDispatch>();
+   const {isLoading, error } = useSelector((state: RootState) => state.habits);  // 获取习惯数据、加载状态和错误信息
+
+   useEffect(() => {
+       dispatch(fetchHabits());  // 组件加载时调用异步 action `fetchHabits` 获取数据
+    }, []);  // 依赖数组为空，表示只在组件挂载时执行一次
+
 
   const today = new Date().toISOString().split("T")[0];
 

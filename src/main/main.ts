@@ -52,15 +52,17 @@ async function main() {
     
 
 
-  if (process.env.NODE_ENV === 'development') {
-    await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
-    win.once('show', () => win.webContents.openDevTools());
+    if (process.env.NODE_ENV === 'development') {
+      await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS]);
+      win.once('ready-to-show', () => {
+        win.show();
+        win.webContents.openDevTools();  // 确保这行被触发
+      });
+      await win.loadURL('http://localhost:5173');
+    } else {
+      await win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
+    }
 
-    await win.loadURL('http://localhost:5173');
-  } else {
-    await win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
-
-  }
 
     app.on('browser-window-created', (ev, window) => {
         window.removeMenu();
